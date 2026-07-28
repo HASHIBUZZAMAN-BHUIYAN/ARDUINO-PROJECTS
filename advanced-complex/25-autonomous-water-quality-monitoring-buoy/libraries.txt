@@ -1,0 +1,10 @@
+OneWire (by Jim Studt / Paul Stoffregen et al.) - install via Arduino Library Manager, search "OneWire"
+DallasTemperature (by Miles Burton) - install via Arduino Library Manager, search "DallasTemperature"
+Adafruit INA219 (by Adafruit) - install via Arduino Library Manager, search "Adafruit INA219"
+Adafruit BusIO (by Adafruit) - install via Arduino Library Manager, search "Adafruit BusIO" (dependency)
+RTClib (by Adafruit) - install via Arduino Library Manager, search "RTClib"
+SD - bundled with the Arduino IDE (built-in), no install needed
+Ethernet - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed
+avr/wdt.h (AVR watchdog) - bundled with the Arduino AVR core, no install needed

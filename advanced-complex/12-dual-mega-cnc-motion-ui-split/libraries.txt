@@ -1,0 +1,5 @@
+AccelStepper (by Mike McCauley) - install via Arduino Library Manager, search "AccelStepper" (motion controller only)
+SD - bundled with the Arduino IDE (built-in), no install needed (UI controller only)
+LiquidCrystal - bundled with the Arduino IDE (built-in), no install needed (UI controller only)
+SoftwareSerial - bundled with the Arduino IDE (built-in), no install needed (UI controller only)
+SPI - bundled with the Arduino IDE (built-in), no install needed

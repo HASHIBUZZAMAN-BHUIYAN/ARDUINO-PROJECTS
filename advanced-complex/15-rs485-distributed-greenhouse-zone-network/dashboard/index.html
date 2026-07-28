@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Greenhouse Zone Network</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 700px; margin: 2rem auto; }
+  table { width: 100%; border-collapse: collapse; }
+  td, th { padding: 6px; border-bottom: 1px solid #ddd; text-align: left; }
+  .online { color: #0a0; } .offline { color: #c00; }
+  input { width: 50px; }
+</style>
+</head>
+<body>
+<h1>Greenhouse Zone Network</h1>
+<table>
+  <thead><tr><th>Zone</th><th>Status</th><th>Temp</th><th>Hum</th><th>Soil</th><th>Actuators</th><th>Setpoint</th></tr></thead>
+  <tbody id="zones"></tbody>
+</table>
+<script>
+async function refresh() {
+  const zones = await (await fetch('/api/zones')).json();
+  document.getElementById('zones').innerHTML = zones.map(z => `
+    <tr>
+      <td>${z.zone}</td>
+      <td class="${z.online ? 'online' : 'offline'}">${z.online ? 'online' : 'offline'}</td>
+      <td>${z.temp.toFixed(1)} C</td>
+      <td>${z.hum.toFixed(0)} %</td>
+      <td>${z.soil}</td>
+      <td>${z.heater ? 'HEAT ' : ''}${z.fan ? 'FAN ' : ''}${z.mist ? 'MIST' : ''}</td>
+      <td>
+        <input id="t${z.zone}" type="number" placeholder="temp">
+        <input id="h${z.zone}" type="number" placeholder="hum">
+        <button onclick="setpoint(${z.zone})">Set</button>
+      </td>
+    </tr>
+  `).join('');
+}
+function setpoint(zone) {
+  const t = document.getElementById('t' + zone).value;
+  const h = document.getElementById('h' + zone).value;
+  fetch(`/api/zones/${zone}/setpoint?t=${t}&h=${h}`).then(refresh);
+}
+refresh();
+setInterval(refresh, 4000);
+</script>
+</body>
+</html>

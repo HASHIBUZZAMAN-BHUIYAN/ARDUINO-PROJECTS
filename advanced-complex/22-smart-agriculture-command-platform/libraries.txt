@@ -1,0 +1,9 @@
+Adafruit BME280 Library (by Adafruit) - install via Arduino Library Manager, search "Adafruit BME280"
+Adafruit BusIO (by Adafruit) - install via Arduino Library Manager, search "Adafruit BusIO" (dependency)
+BH1750 (by Christopher Laws) - install via Arduino Library Manager, search "BH1750"
+RTClib (by Adafruit) - install via Arduino Library Manager, search "RTClib"
+SD - bundled with the Arduino IDE (built-in), no install needed
+Ethernet - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed
+avr/wdt.h (AVR watchdog) - bundled with the Arduino AVR core, no install needed

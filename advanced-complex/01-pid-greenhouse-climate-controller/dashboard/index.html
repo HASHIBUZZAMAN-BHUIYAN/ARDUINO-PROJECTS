@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Greenhouse Dashboard</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 480px; margin: 2rem auto; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #ddd; }
+  .on { color: #0a0; font-weight: bold; }
+  .off { color: #999; }
+  input { width: 60px; }
+</style>
+</head>
+<body>
+<h1>Greenhouse Status</h1>
+<div id="readings"></div>
+<h2>Setpoints</h2>
+<label>Temp (C): <input id="t" type="number"></label>
+<label>Hum (%): <input id="h" type="number"></label>
+<button onclick="setPoint()">Apply</button>
+
+<script>
+async function refresh() {
+  const res = await fetch('/api/data');
+  const d = await res.json();
+  document.getElementById('readings').innerHTML = `
+    <div class="row"><span>Temperature</span><span>${d.temp.toFixed(1)} C</span></div>
+    <div class="row"><span>Humidity</span><span>${d.hum.toFixed(1)} %</span></div>
+    <div class="row"><span>Light</span><span>${d.light.toFixed(0)} lux</span></div>
+    <div class="row"><span>Soil</span><span>${d.soil}</span></div>
+    <div class="row"><span>Heater</span><span class="${d.heater?'on':'off'}">${d.heater?'ON':'off'}</span></div>
+    <div class="row"><span>Fan</span><span class="${d.fan?'on':'off'}">${d.fan?'ON':'off'}</span></div>
+    <div class="row"><span>Mister</span><span class="${d.mist?'on':'off'}">${d.mist?'ON':'off'}</span></div>
+    <div class="row"><span>Grow-light</span><span class="${d.light_relay?'on':'off'}">${d.light_relay?'ON':'off'}</span></div>
+  `;
+  document.getElementById('t').value = d.setpointTemp;
+  document.getElementById('h').value = d.setpointHum;
+}
+function setPoint() {
+  const t = document.getElementById('t').value;
+  const h = document.getElementById('h').value;
+  fetch(`/setpoint?t=${t}&h=${h}`).then(refresh);
+}
+refresh();
+setInterval(refresh, 3000);
+</script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+MFRC522 (by GithubCommunity / miguelbalboa) - install via Arduino Library Manager, search "MFRC522"
+Servo - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed

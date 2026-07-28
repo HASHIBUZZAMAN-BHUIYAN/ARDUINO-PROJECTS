@@ -1,0 +1,6 @@
+TinyGPSPlus (by Mikal Hart) - install via Arduino Library Manager
+RTClib (by Adafruit) - install via Arduino Library Manager
+SD - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed
+SoftwareSerial - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed

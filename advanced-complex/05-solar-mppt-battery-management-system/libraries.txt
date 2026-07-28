@@ -1,0 +1,6 @@
+Adafruit INA219 (by Adafruit) - install via Arduino Library Manager, search "Adafruit INA219"
+Adafruit BusIO (by Adafruit) - install via Arduino Library Manager, search "Adafruit BusIO" (dependency of Adafruit INA219)
+SD - bundled with the Arduino IDE (built-in), no install needed
+Ethernet - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed

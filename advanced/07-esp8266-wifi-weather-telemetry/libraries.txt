@@ -1,0 +1,5 @@
+WiFiEspAT (by Juraj Andrassy) - install via Arduino Library Manager. Provides a WiFi.h-style API over an ESP8266 running stock AT-command firmware.
+DHT sensor library (by Adafruit) - install via Arduino Library Manager
+Adafruit Unified Sensor - dependency of the DHT library, install via Library Manager
+Adafruit BMP280 Library - install via Arduino Library Manager
+Adafruit BusIO - dependency of the BMP280 library, install via Library Manager

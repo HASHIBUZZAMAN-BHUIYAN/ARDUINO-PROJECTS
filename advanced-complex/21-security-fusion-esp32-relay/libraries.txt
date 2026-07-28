@@ -1,0 +1,6 @@
+--- Mega (src/arduino-sensors) ---
+(no external libraries needed - built-in Serial2 only)
+
+--- ESP32 DevKit (src/esp32-relay) ---
+PubSubClient (by Nick O'Leary) - install via Arduino Library Manager, search "PubSubClient"
+WiFi - bundled with the ESP32 Arduino core, no install needed (requires the ESP32 board package installed via Boards Manager: "esp32 by Espressif Systems")

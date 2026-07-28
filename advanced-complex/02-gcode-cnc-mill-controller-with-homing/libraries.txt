@@ -1,0 +1,3 @@
+AccelStepper (by Mike McCauley) - install via Arduino Library Manager, search "AccelStepper"
+SD - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed

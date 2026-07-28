@@ -1,0 +1,3 @@
+OneWire (by Jim Studt / Paul Stoffregen et al.) - install via Arduino Library Manager, search "OneWire"
+DallasTemperature (by Miles Burton) - install via Arduino Library Manager, search "DallasTemperature"
+SoftwareSerial - bundled with the Arduino IDE (built-in), no install needed

@@ -1,0 +1,8 @@
+MFRC522 (by GithubCommunity / miguelbalboa) - install via Arduino Library Manager
+Keypad (by Mark Stanley, Alexander Brevig) - install via Arduino Library Manager
+RTClib (by Adafruit) - install via Arduino Library Manager
+SD - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed
+LiquidCrystal - bundled with the Arduino IDE (built-in), no install needed
+Servo - bundled with the Arduino IDE (built-in), no install needed

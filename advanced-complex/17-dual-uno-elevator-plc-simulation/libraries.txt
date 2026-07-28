@@ -1,0 +1,1 @@
+Wire - bundled with the Arduino IDE (built-in), no install needed

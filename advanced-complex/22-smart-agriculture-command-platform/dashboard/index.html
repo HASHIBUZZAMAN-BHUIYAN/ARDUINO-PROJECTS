@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Agriculture Command Platform</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 640px; margin: 2rem auto; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #ddd; }
+  table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+  td, th { padding: 6px; border-bottom: 1px solid #ddd; text-align: left; }
+  .open { color: #06c; font-weight: bold; }
+  #tokenBar { margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+<h1>Smart Agriculture Command Platform</h1>
+<div id="tokenBar">
+  <label>API Token: <input id="token" type="password" placeholder="X-Auth-Token"></label>
+  <button onclick="saveTokenAndRefresh()">Connect</button>
+  <span id="authStatus"></span>
+</div>
+<div id="climate"></div>
+<table>
+  <thead><tr><th>Zone</th><th>Soil</th><th>Valve</th><th>Override</th></tr></thead>
+  <tbody id="zones"></tbody>
+</table>
+
+<script>
+function getToken() { return localStorage.getItem('apiToken') || ''; }
+function saveTokenAndRefresh() {
+  localStorage.setItem('apiToken', document.getElementById('token').value);
+  refresh();
+}
+
+async function apiFetch(path, opts = {}) {
+  opts.headers = Object.assign({}, opts.headers, {'X-Auth-Token': getToken()});
+  return fetch(path, opts);
+}
+
+async function refresh() {
+  const res = await apiFetch('/api/state');
+  if (res.status === 401) {
+    document.getElementById('authStatus').textContent = 'Unauthorized - check token';
+    return;
+  }
+  document.getElementById('authStatus').textContent = 'Connected';
+  const d = await res.json();
+
+  document.getElementById('climate').innerHTML = `
+    <div class="row"><span>Temperature</span><span>${d.climate.temp.toFixed(1)} C (target ${d.climate.setpointTemp})</span></div>
+    <div class="row"><span>Humidity</span><span>${d.climate.hum.toFixed(0)} % (target ${d.climate.setpointHum})</span></div>
+    <div class="row"><span>Light</span><span>${d.climate.light.toFixed(0)} lux</span></div>
+    <div class="row"><span>Actuators</span><span>${d.climate.heater?'HEAT ':''}${d.climate.fan?'FAN ':''}${d.climate.mist?'MIST ':''}${d.climate.lightRelay?'GROW-LIGHT':''}</span></div>
+  `;
+
+  document.getElementById('zones').innerHTML = d.zones.map(z => `
+    <tr>
+      <td>${z.zone}</td>
+      <td>${z.soil}</td>
+      <td class="${z.valveOpen ? 'open' : ''}">${z.valveOpen ? 'OPEN' : 'closed'}</td>
+      <td>
+        <button onclick="setZone(${z.zone}, 'on')">On</button>
+        <button onclick="setZone(${z.zone}, 'off')">Off</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function setZone(n, state) {
+  apiFetch(`/api/zones/${n}/${state}`, { method: 'POST' }).then(refresh);
+}
+
+document.getElementById('token').value = getToken();
+refresh();
+setInterval(refresh, 5000);
+</script>
+</body>
+</html>

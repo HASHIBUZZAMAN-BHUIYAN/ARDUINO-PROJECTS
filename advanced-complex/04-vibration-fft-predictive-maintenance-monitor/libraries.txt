@@ -1,0 +1,5 @@
+arduinoFFT (by Enrique Condes) - install via Arduino Library Manager, search "arduinoFFT"
+RTClib (by Adafruit) - install via Arduino Library Manager, search "RTClib"
+SD - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed

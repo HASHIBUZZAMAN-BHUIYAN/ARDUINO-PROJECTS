@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sensor Mesh Dashboard</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 560px; margin: 2rem auto; }
+  table { width: 100%; border-collapse: collapse; }
+  td, th { padding: 6px; border-bottom: 1px solid #ddd; text-align: left; }
+  .online { color: #0a0; font-weight: bold; }
+  .offline { color: #c00; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>RS-485 Sensor Mesh</h1>
+<table>
+  <thead><tr><th>Node</th><th>Status</th><th>Value 1</th><th>Value 2</th><th>Last Seen</th></tr></thead>
+  <tbody id="nodes"></tbody>
+</table>
+<script>
+const names = {1: "Climate", 2: "Air Quality", 3: "Occupancy"};
+async function refresh() {
+  const nodes = await (await fetch('/api/nodes')).json();
+  document.getElementById('nodes').innerHTML = nodes.map(n => `
+    <tr>
+      <td>${names[n.addr]}</td>
+      <td class="${n.online ? 'online' : 'offline'}">${n.online ? 'ONLINE' : 'OFFLINE'}</td>
+      <td>${n.v1}</td>
+      <td>${n.v2}</td>
+      <td>${n.lastSeen}</td>
+    </tr>
+  `).join('');
+}
+refresh();
+setInterval(refresh, 4000);
+</script>
+</body>
+</html>

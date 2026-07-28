@@ -1,0 +1,9 @@
+SoftwareSerial - bundled with the Arduino IDE (built-in), no install needed
+DHT sensor library (by Adafruit) - install via Arduino Library Manager, search "DHT sensor library" (Node 1 only)
+Adafruit Unified Sensor (by Adafruit) - install via Arduino Library Manager, search "Adafruit Unified Sensor" (Node 1 only, dependency)
+BH1750 (by Christopher Laws) - install via Arduino Library Manager, search "BH1750" (Node 1 only)
+RTClib (by Adafruit) - install via Arduino Library Manager, search "RTClib" (hub only)
+SD - bundled with the Arduino IDE (built-in), no install needed (hub only)
+Ethernet - bundled with the Arduino IDE (built-in), no install needed (hub only)
+SPI - bundled with the Arduino IDE (built-in), no install needed (hub only)
+Wire - bundled with the Arduino IDE (built-in), no install needed

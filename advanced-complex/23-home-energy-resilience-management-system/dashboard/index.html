@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Home Energy Resilience Dashboard</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 500px; margin: 2rem auto; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #ddd; }
+  .active { color: #0a0; font-weight: bold; }
+  #tokenBar { margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+<h1>Home Energy Resilience</h1>
+<div id="tokenBar">
+  <label>API Token: <input id="token" type="password"></label>
+  <button onclick="saveTokenAndRefresh()">Connect</button>
+  <span id="authStatus"></span>
+</div>
+<div id="readings"></div>
+
+<script>
+function getToken() { return localStorage.getItem('apiToken') || ''; }
+function saveTokenAndRefresh() {
+  localStorage.setItem('apiToken', document.getElementById('token').value);
+  refresh();
+}
+async function apiFetch(path) {
+  return fetch(path, { headers: { 'X-Auth-Token': getToken() } });
+}
+async function refresh() {
+  const res = await apiFetch('/api/state');
+  if (res.status === 401) {
+    document.getElementById('authStatus').textContent = 'Unauthorized - check token';
+    return;
+  }
+  document.getElementById('authStatus').textContent = 'Connected';
+  const d = await res.json();
+  document.getElementById('readings').innerHTML = `
+    <div class="row"><span>Grid</span><span>${d.gridW.toFixed(0)} W ${d.usingGrid ? '<span class="active">(ACTIVE)</span>' : ''}</span></div>
+    <div class="row"><span>Solar</span><span>${d.solarW.toFixed(0)} W ${!d.usingGrid ? '<span class="active">(ACTIVE)</span>' : ''}</span></div>
+    <div class="row"><span>Battery</span><span>${d.batteryW.toFixed(0)} W</span></div>
+    <div class="row"><span>State of Charge</span><span>${d.soc.toFixed(0)} %</span></div>
+    <div class="row"><span>Load Shed (priority 1)</span><span>${d.shed1 ? 'SHED' : 'normal'}</span></div>
+    <div class="row"><span>Load Shed (priority 2)</span><span>${d.shed2 ? 'SHED' : 'normal'}</span></div>
+  `;
+}
+document.getElementById('token').value = getToken();
+refresh();
+setInterval(refresh, 5000);
+</script>
+</body>
+</html>

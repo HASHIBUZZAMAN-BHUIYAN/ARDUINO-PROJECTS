@@ -1,0 +1,1 @@
+IRremote (by Armin Joachimsmeyer / shirriff et al.) - install via Arduino Library Manager, search "IRremote"

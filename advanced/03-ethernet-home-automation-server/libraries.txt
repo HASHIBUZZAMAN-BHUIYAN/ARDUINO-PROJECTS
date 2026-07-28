@@ -1,0 +1,2 @@
+Ethernet - bundled with the Arduino IDE (built-in), no install needed. Works with W5100/W5500-based shields.
+SPI - bundled with the Arduino IDE (built-in), no install needed

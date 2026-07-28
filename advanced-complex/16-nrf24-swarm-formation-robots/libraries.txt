@@ -1,0 +1,2 @@
+RF24 (by TMRh20) - install via Arduino Library Manager, search "RF24"
+SPI - bundled with the Arduino IDE (built-in), no install needed

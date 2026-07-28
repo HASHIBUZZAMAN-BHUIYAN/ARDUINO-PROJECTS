@@ -1,0 +1,9 @@
+DHT sensor library (by Adafruit) - install via Arduino Library Manager
+Adafruit Unified Sensor - dependency of the DHT library, install via Library Manager
+Adafruit BMP280 Library - install via Arduino Library Manager
+Adafruit BusIO - dependency of the BMP280 library, install via Library Manager
+RTClib (by Adafruit) - install via Arduino Library Manager
+SD - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed
+LiquidCrystal - bundled with the Arduino IDE (built-in), no install needed

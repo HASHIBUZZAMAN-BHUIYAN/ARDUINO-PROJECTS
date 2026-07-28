@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Weather Buoy Dashboard</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 480px; margin: 2rem auto; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #ddd; }
+  canvas { border: 1px solid #ccc; margin-top: 1rem; width: 100%; height: 100px; }
+</style>
+</head>
+<body>
+<h1>Weather Buoy</h1>
+<div id="readings"></div>
+<h2>Wind Speed (last 24 samples)</h2>
+<canvas id="chart" width="440" height="100"></canvas>
+
+<script>
+async function refresh() {
+  const d = await (await fetch('/api/data')).json();
+  document.getElementById('readings').innerHTML = `
+    <div class="row"><span>Wind</span><span>${d.windKph.toFixed(1)} kph ${d.windDir}</span></div>
+    <div class="row"><span>Rain today</span><span>${d.rainMmToday.toFixed(1)} mm</span></div>
+    <div class="row"><span>Temperature</span><span>${d.temp.toFixed(1)} C</span></div>
+    <div class="row"><span>Humidity</span><span>${d.hum.toFixed(0)} %</span></div>
+    <div class="row"><span>Pressure</span><span>${d.pressure.toFixed(0)} hPa</span></div>
+    <div class="row"><span>UV</span><span>${d.uv.toFixed(2)}</span></div>
+    <div class="row"><span>Water level</span><span>${d.waterCm.toFixed(0)} cm</span></div>
+  `;
+  const hist = await (await fetch('/api/history')).json();
+  drawChart(hist.map(r => r.windKph));
+}
+
+function drawChart(values) {
+  const c = document.getElementById('chart');
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, c.width, c.height);
+  if (values.length < 2) return;
+  const max = Math.max(...values, 1);
+  ctx.beginPath();
+  values.forEach((v, i) => {
+    const x = (i / (values.length - 1)) * c.width;
+    const y = c.height - (v / max) * c.height;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = '#069';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+refresh();
+setInterval(refresh, 10000);
+</script>
+</body>
+</html>

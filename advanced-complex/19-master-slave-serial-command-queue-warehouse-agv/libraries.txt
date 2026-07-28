@@ -1,0 +1,3 @@
+Keypad (by Mark Stanley and Alexander Brevig) - install via Arduino Library Manager, search "Keypad" (dispatch console only)
+LiquidCrystal - bundled with the Arduino IDE (built-in), no install needed (dispatch console only)
+SoftwareSerial - bundled with the Arduino IDE (built-in), no install needed (dispatch console only)

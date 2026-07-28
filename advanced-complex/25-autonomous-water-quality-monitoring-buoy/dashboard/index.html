@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Water Quality Buoy Dashboard</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 500px; margin: 2rem auto; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #ddd; }
+  .alert { color: #c00; font-weight: bold; }
+  canvas { border: 1px solid #ccc; margin-top: 1rem; width: 100%; height: 100px; }
+  #tokenBar { margin-bottom: 1rem; }
+</style>
+</head>
+<body>
+<h1>Water Quality Buoy</h1>
+<div id="tokenBar">
+  <label>API Token: <input id="token" type="password"></label>
+  <button onclick="saveTokenAndRefresh()">Connect</button>
+  <span id="authStatus"></span>
+</div>
+<div id="readings"></div>
+<h2>Dissolved Oxygen (last 24h)</h2>
+<canvas id="chart" width="440" height="100"></canvas>
+
+<script>
+function getToken() { return localStorage.getItem('apiToken') || ''; }
+function saveTokenAndRefresh() {
+  localStorage.setItem('apiToken', document.getElementById('token').value);
+  refresh();
+}
+async function apiFetch(path) {
+  return fetch(path, { headers: { 'X-Auth-Token': getToken() } });
+}
+async function refresh() {
+  const res = await apiFetch('/api/state');
+  if (res.status === 401) {
+    document.getElementById('authStatus').textContent = 'Unauthorized - check token';
+    return;
+  }
+  document.getElementById('authStatus').textContent = 'Connected';
+  const d = await res.json();
+  document.getElementById('readings').innerHTML = `
+    <div class="row"><span>pH</span><span>${d.ph.toFixed(2)}</span></div>
+    <div class="row"><span>Turbidity</span><span>${d.turbidity.toFixed(2)} V</span></div>
+    <div class="row"><span>Dissolved Oxygen</span><span class="${d.do < 3 ? 'alert' : ''}">${d.do.toFixed(2)} mg/L</span></div>
+    <div class="row"><span>Water Temp</span><span>${d.tempC.toFixed(1)} C</span></div>
+    <div class="row"><span>Water Level</span><span>${d.levelCm.toFixed(0)} cm</span></div>
+    <div class="row"><span>Battery</span><span>${d.batteryV.toFixed(1)} V, ${d.batteryI.toFixed(0)} mA</span></div>
+    <div class="row"><span>Aerator</span><span class="${d.aeratorOn ? 'alert' : ''}">${d.aeratorOn ? 'ON (anomaly response)' : 'off'}</span></div>
+  `;
+
+  const hist = await (await apiFetch('/api/history')).json();
+  drawChart(hist.map(r => r.avgDO));
+}
+
+function drawChart(values) {
+  const c = document.getElementById('chart');
+  const ctx = c.getContext('2d');
+  ctx.clearRect(0, 0, c.width, c.height);
+  if (values.length < 2) return;
+  const max = Math.max(...values, 1);
+  ctx.beginPath();
+  values.forEach((v, i) => {
+    const x = (i / (values.length - 1)) * c.width;
+    const y = c.height - (v / max) * c.height;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = '#06c';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+}
+
+document.getElementById('token').value = getToken();
+refresh();
+setInterval(refresh, 10000);
+</script>
+</body>
+</html>

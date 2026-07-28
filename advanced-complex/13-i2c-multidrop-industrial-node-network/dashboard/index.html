@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Industrial Node Network Dashboard</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 480px; margin: 2rem auto; }
+  .row { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #ddd; }
+  button { margin: 2px; }
+</style>
+</head>
+<body>
+<h1>Industrial Node Network</h1>
+<div id="readings"></div>
+<h2>Relay Bank</h2>
+<div id="relays"></div>
+
+<script>
+async function refresh() {
+  const d = await (await fetch('/api/nodes')).json();
+  document.getElementById('readings').innerHTML = `
+    <div class="row"><span>Weight</span><span>${d.weight.toFixed(2)} units</span></div>
+    <div class="row"><span>Temperature</span><span>${d.tempC.toFixed(1)} C</span></div>
+  `;
+  document.getElementById('relays').innerHTML = [0,1,2,3].map(i => {
+    const on = (d.relayState >> i) & 1;
+    return `<button onclick="setRelay(${i}, ${on ? 0 : 1})">Relay ${i+1}: ${on ? 'ON' : 'off'}</button>`;
+  }).join(' ');
+}
+function setRelay(bit, state) {
+  fetch(`/api/relay/${bit}/${state ? 'on' : 'off'}`).then(refresh);
+}
+refresh();
+setInterval(refresh, 3000);
+</script>
+</body>
+</html>

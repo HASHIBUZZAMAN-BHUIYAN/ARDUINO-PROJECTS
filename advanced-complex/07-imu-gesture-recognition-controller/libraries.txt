@@ -1,0 +1,6 @@
+Adafruit MPU6050 (by Adafruit) - install via Arduino Library Manager, search "Adafruit MPU6050"
+Adafruit Unified Sensor (by Adafruit) - install via Arduino Library Manager, search "Adafruit Unified Sensor" (dependency)
+Adafruit BusIO (by Adafruit) - install via Arduino Library Manager, search "Adafruit BusIO" (dependency)
+Servo - bundled with the Arduino IDE (built-in), no install needed
+EEPROM - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed

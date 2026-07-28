@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Irrigation Dashboard</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+  table { width: 100%; border-collapse: collapse; }
+  td, th { padding: 6px; border-bottom: 1px solid #ddd; text-align: left; }
+  .open { color: #06c; font-weight: bold; }
+  button { margin: 0 2px; }
+</style>
+</head>
+<body>
+<h1>Irrigation Zones</h1>
+<table>
+  <thead><tr><th>Zone</th><th>Soil</th><th>Schedule</th><th>Valve</th><th>Override</th></tr></thead>
+  <tbody id="zones"></tbody>
+</table>
+
+<script>
+async function refresh() {
+  const zones = await (await fetch('/api/zones')).json();
+  document.getElementById('zones').innerHTML = zones.map(z => `
+    <tr>
+      <td>${z.zone}</td>
+      <td>${z.soil}</td>
+      <td>${String(z.startHour).padStart(2,'0')}:${String(z.startMinute).padStart(2,'0')}</td>
+      <td class="${z.valveOpen ? 'open' : ''}">${z.valveOpen ? 'OPEN' : 'closed'}</td>
+      <td>
+        <button onclick="setZone(${z.zone}, 'on')">On</button>
+        <button onclick="setZone(${z.zone}, 'off')">Off</button>
+      </td>
+    </tr>
+  `).join('');
+}
+function setZone(n, state) {
+  fetch(`/api/zones/${n}/${state}`, { method: 'POST' }).then(refresh);
+}
+refresh();
+setInterval(refresh, 3000);
+</script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+AccelStepper (by Mike McCauley) - install via Arduino Library Manager
+Servo - bundled with the Arduino IDE (built-in), no install needed

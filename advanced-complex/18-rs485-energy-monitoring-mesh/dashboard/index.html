@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Energy Monitoring Dashboard</title>
+<meta charset="utf-8">
+<style>
+  body { font-family: sans-serif; max-width: 560px; margin: 2rem auto; }
+  table { width: 100%; border-collapse: collapse; }
+  td, th { padding: 6px; border-bottom: 1px solid #ddd; text-align: left; }
+  .online { color: #0a0; } .offline { color: #c00; }
+</style>
+</head>
+<body>
+<h1>Circuit Energy Monitoring</h1>
+<table>
+  <thead><tr><th>Circuit</th><th>Status</th><th>Watts</th><th>Wh (session)</th></tr></thead>
+  <tbody id="circuits"></tbody>
+</table>
+<script>
+async function refresh() {
+  const circuits = await (await fetch('/api/circuits')).json();
+  document.getElementById('circuits').innerHTML = circuits.map(c => `
+    <tr>
+      <td>Circuit ${c.id}</td>
+      <td class="${c.online ? 'online' : 'offline'}">${c.online ? 'online' : 'offline'}</td>
+      <td>${c.watts.toFixed(1)} W</td>
+      <td>${c.whToday.toFixed(2)} Wh</td>
+    </tr>
+  `).join('');
+}
+refresh();
+setInterval(refresh, 5000);
+</script>
+</body>
+</html>

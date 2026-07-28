@@ -1,0 +1,10 @@
+OneWire (by Jim Studt / Paul Stoffregen et al.) - install via Arduino Library Manager, search "OneWire"
+DallasTemperature (by Miles Burton) - install via Arduino Library Manager, search "DallasTemperature"
+DHT sensor library (by Adafruit) - install via Arduino Library Manager, search "DHT sensor library"
+Adafruit Unified Sensor (by Adafruit) - install via Arduino Library Manager, search "Adafruit Unified Sensor" (dependency)
+Adafruit ADXL345 (by Adafruit) - install via Arduino Library Manager, search "Adafruit ADXL345"
+RTClib (by Adafruit) - install via Arduino Library Manager, search "RTClib"
+SD - bundled with the Arduino IDE (built-in), no install needed
+SPI - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed
+(SIM800L uses raw AT commands over Serial2 - no additional library required)

@@ -1,0 +1,6 @@
+SoftwareSerial - bundled with the Arduino IDE (built-in), no install needed
+RTClib (by Adafruit) - install via Arduino Library Manager, search "RTClib" (hub only)
+SD - bundled with the Arduino IDE (built-in), no install needed (hub only)
+Ethernet - bundled with the Arduino IDE (built-in), no install needed (hub only)
+SPI - bundled with the Arduino IDE (built-in), no install needed (hub only)
+Wire - bundled with the Arduino IDE (built-in), no install needed (hub only)

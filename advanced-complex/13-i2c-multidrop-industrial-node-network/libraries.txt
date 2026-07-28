@@ -1,0 +1,7 @@
+HX711 (by Bogdan Necula / bogde) - install via Arduino Library Manager, search "HX711" (load cell node only)
+MAX6675 library (by Adafruit) - install via Arduino Library Manager, search "MAX6675" (thermocouple node only)
+RTClib (by Adafruit) - install via Arduino Library Manager, search "RTClib" (hub only)
+SD - bundled with the Arduino IDE (built-in), no install needed (hub only)
+Ethernet - bundled with the Arduino IDE (built-in), no install needed (hub only)
+SPI - bundled with the Arduino IDE (built-in), no install needed
+Wire - bundled with the Arduino IDE (built-in), no install needed
