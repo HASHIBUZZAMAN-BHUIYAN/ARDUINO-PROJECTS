@@ -2,7 +2,7 @@
 
 A collection of 50 varied Arduino-family hardware projects, spanning home automation, robotics, IoT/telemetry, sensors & monitoring, security, audio/visual, environmental, and wearable builds. Projects are split into four difficulty tiers and rotate across four boards: **Uno**, **Nano**, **Uno Q**, and **Mega**.
 
-Licensed under the [GNU General Public License v3.0](LICENSE).
+Licensed under the [PolyForm Strict License 1.0.0](LICENSE) — restricted, non-redistributable.
 
 ## Repository Structure
 
@@ -107,7 +107,7 @@ An Arduino node also appears as a sensor client in [Distributed Sensor Hub with 
 
 ## License
 
-This repository is licensed under the [GNU General Public License v3.0](LICENSE).
+This repository is licensed under the [PolyForm Strict License 1.0.0](LICENSE) — restricted, non-redistributable.
 
 ## Author
 
